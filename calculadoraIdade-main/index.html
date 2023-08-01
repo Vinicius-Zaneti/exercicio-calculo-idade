@@ -15,6 +15,8 @@
         <h1>Calculadora de Idade</h1>
         <section>
             <h2>Cadastro de informações</h2>
+            <!-- Esse evento faz com que, quando o usuário colocar os dados, eles executem 
+            a função calcular -->
             <form onsubmit="calcular(event)" method="post">
                 <div class="campo-form">
                     <label for="nome">Nome:</label>
@@ -58,6 +60,8 @@
                     </tr>                    
                 </tbody>
             </table>
+            <!-- esse evento faz com que, quando o usuario CLICAR no botão, ele executa a funçao de
+            deletarRegistros -->
             <button onclick="deletarRegistros()" class="botao-tabela">Limpar Registros</button>
         </section>
     </main>

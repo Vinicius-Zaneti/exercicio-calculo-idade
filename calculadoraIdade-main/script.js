@@ -16,7 +16,7 @@
 // OK 4. Organizar o objeto pessoa para salvar na lista
 // OK 5. Cadastrar a pessoa na lista
 // OK 6. Função para carregar as pessoas, carrega a lista do localStorage, chamar ao carregar a página
-// Semi-OK 7. Renderizar o conteúdo da tabela com as pessoas cadastradas
+// OK 7. Renderizar o conteúdo da tabela com as pessoas cadastradas
 // OK 8. Botão para limpar os registros;
 
 function calcular(event) {
@@ -27,15 +27,17 @@ function calcular(event) {
     let usuario = receberValores()
 
     //Passo 2 
-    let idadeCalculada = puxandoIdade(usuario.ano)
+    let idadeCalculada = calculandoIdade(usuario.ano)
 
     //Passo 3
     let faixaEtaria = faixaEtariaGerada(idadeCalculada)
 
     console.log (faixaEtaria)
 
-  usuario =  organizarDados(usuario,idadeCalculada,faixaEtaria)
+    // Passo 4
+    usuario =  organizarDados(usuario,idadeCalculada,faixaEtaria)
 
+    // Passo 5
   cadastrarUsuario(usuario)
 
   window.location.reload()
@@ -62,18 +64,21 @@ function receberValores() {
     return dadosUsuario;
 }
 
-function puxandoIdade(ano) {
+// Passo 2 - Calculando a idade
+function calculandoIdade(ano) {
 let dataAtual = new Date();
 let anoAtual = dataAtual.getFullYear();
-console.log(anoAtual); // 2023
+// console.log(anoAtual);
 
 let idade = anoAtual - ano
 
-console.log(idade)
+
+// console.log(idade)
 
 return idade;
 }
 
+// Passo 3 - Gerando a faixa etaria de acordo com a idade recebida
 function faixaEtariaGerada(idade) {
     
     if (idade <= 12) {
@@ -91,6 +96,7 @@ function faixaEtariaGerada(idade) {
 
 }
 
+// Passo 4 - Organizando os dados para colocar na lista
 function organizarDados(dadosUsuario,faixaEtaria,idade) {
 
     let dadosOrganizados = {
@@ -102,8 +108,7 @@ function organizarDados(dadosUsuario,faixaEtaria,idade) {
     return dadosOrganizados;
 }
 
-
-// TESTES //
+// Passo 5 - Cadastrando o usuario na lista
 function cadastrarUsuario(dadosUsuario) {
     let listaUsuarios = [] 
 
@@ -121,6 +126,7 @@ function cadastrarUsuario(dadosUsuario) {
    
 }   
 
+// Passo 6 - Carrega os usuários para exibir na lista
 function carregarUsuarios() {
     let listaCarregada = []
 
@@ -141,6 +147,7 @@ function carregarUsuarios() {
 
 window.addEventListener("DOMContentLoaded",() => carregarUsuarios())
 
+// Passo 7 - Exibe os dados na lista do site
 function montarTabela(listaUsuarios) {
     let tabela = document.getElementById ("corpo-tabela")
     let template = ""
@@ -149,15 +156,16 @@ function montarTabela(listaUsuarios) {
     listaUsuarios.forEach(usuario => {
         template += ` <tr>
         <td data-cell="nome">${usuario.nome}</td>
-        <td data-cell="data de nascimento">28/06/1998</td>
+        <td data-cell="data de nascimento">${usuario.dia + '/' + usuario.mes + '/' + usuario.ano}</td>
         <td data-cell="idade">${usuario.quantosAnos}</td>
         <td data-cell="faixa etária">${usuario.idadeEtaria}</td> 
     </tr> `
     })
 
     tabela.innerHTML = template;
-}
+}   
 
+// Passo 8 - Deleta os registros da lista
 function deletarRegistros() {
     //Remove o item do local storage
     localStorage.removeItem("usuariosCadastrados")
